@@ -8,7 +8,7 @@ import AddShoppingCardIcon from "@material-ui/icons/AddShoppingCart";
 import Badge from "@material-ui/core/Badge";
 // Styles
 import { Wrapper } from './App.styles';
-
+// Types
 export type CartItemType = {
   id: number;
   category: string;
@@ -19,7 +19,7 @@ export type CartItemType = {
   amount: number;
 };
 
-const getProducts = async (): Promise<CartItemType[]> =>
+const getProducts = async (): Promise<CartItemType[]> => // Promises are generic types.
   await (await fetch("https://fakestoreapi.com/products")).json();
 
 const App = () => {
