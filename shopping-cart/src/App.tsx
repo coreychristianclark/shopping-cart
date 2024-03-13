@@ -2,13 +2,14 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 // Components
 import Item from "./Item/Item";
-// import Drawer from "@material-ui/core/Drawer";
+import Drawer from "@mui/material/Drawer";
 import LinearProgress from "@mui/material/LinearProgress";
 import Grid from "@mui/material/Grid";
-// import AddShoppingCardIcon from "@material-ui/icons/AddShoppingCart";
-// import Badge from "@material-ui/core/Badge";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import Badge from "@mui/material/Badge";
 // Styles
-import { Wrapper } from "./App.styles";
+import { Wrapper, StyledButton } from "./App.styles";
+// import { AddShoppingCartIcon } from "@mui//Icon";
 // Types
 export type CartItemType = {
   id: number;
@@ -24,16 +25,15 @@ const getProducts = async (): Promise<CartItemType[]> => // Promises are generic
   await (await fetch("https://fakestoreapi.com/products")).json();
 
 const App = () => {
+  const [cartOpen, setCartOpen] = useState(false);
+  const [cartItems, setCartItems] = useState([] as CartItemType[])
   const { data, isLoading, error } = useQuery<CartItemType[]>(
     "products", // 'products' is our query key.
     getProducts
   );
-  console.log(data);
 
-  const getTotalItems = () => null;
-
+  const getTotalItems = (items: CartItemType[]) => null;
   const handleAddToCart = (clickedItem: CartItemType) => null;
-
   const handleRemoveFromCart = () => null;
 
   if (isLoading) return <LinearProgress />;
@@ -41,6 +41,14 @@ const App = () => {
 
   return (
     <Wrapper>
+      <Drawer anchor='right' open={cartOpen} onClose={() => setCartOpen(false)}>
+        Cart Goes Here
+      </Drawer>
+      <StyledButton onClick={() => setCartOpen(true)}>
+        <Badge badgeContent={getTotalItems(cartItems)} color='error'> {/* Setting color to 'error' makes it red. */}
+          <AddShoppingCartIcon />
+</Badge>
+      </StyledButton>
       <Grid container spacing={3}>
         {/* From Material UI */}
         {data?.map((item) => (
