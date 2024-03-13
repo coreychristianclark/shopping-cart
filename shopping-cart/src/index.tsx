@@ -1,20 +1,20 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client'; // Adding the /client is what makes createRoot work.
 import App from './App';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 const client = new QueryClient();
+const container = document.getElementById('root');
+
+if (container) {
+  const root = ReactDOM.createRoot(container);
 
 
-// const root = ReactDOM.createRoot(
-//   document.getElementById('root') as HTMLElement
-// );
 
+  root.render(
 
-ReactDOM.render(
-
-  <QueryClientProvider client={client}>
-    <App />
-  </QueryClientProvider>,
-  document.getElementById('root')
-);
+    <QueryClientProvider client={client}>
+      <App />
+    </QueryClientProvider>
+  );
+}
