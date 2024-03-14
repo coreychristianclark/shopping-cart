@@ -3,7 +3,6 @@ import Button from "@mui/material/Button";
 import { CartItemType } from "../App";
 // Styles
 import { Wrapper } from "./CartItem.styles";
-import { Check } from "@mui/icons-material";
 
 type Props = {
   item: CartItemType;
