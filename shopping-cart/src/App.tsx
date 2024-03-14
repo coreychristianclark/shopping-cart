@@ -32,7 +32,8 @@ const App = () => {
     getProducts
   );
 
-  const getTotalItems = (items: CartItemType[]) => null;
+  const getTotalItems = (items: CartItemType[]) =>
+    items.reduce((acc: number, item) => acc + item.amount, 0) // '0' is our starting value.
   const handleAddToCart = (clickedItem: CartItemType) => null;
   const handleRemoveFromCart = () => null;
 
