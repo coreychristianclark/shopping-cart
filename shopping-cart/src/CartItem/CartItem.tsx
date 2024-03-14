@@ -1,4 +1,5 @@
-import CheckBoxOutlineBlankRoundedIcon from "@mui/icons-material/CheckBoxOutlineBlankRounded"; // Types
+// Types
+import Button from "@mui/material/Button";
 import { CartItemType } from "../App";
 // Styles
 import { Wrapper } from "./CartItem.styles";
@@ -21,25 +22,25 @@ const CartItem: React.FC<Props> = ({ item, addToCart, removeFromCart }) => (
       </div>
 
       <div className="buttons">
-        <CheckBoxOutlineBlankRoundedIcon
+        <Button
           size="small"
           disableElevation // Prevents any sort of drop shadow.
           variant="contained"
           onClick={() => removeFromCart(item.id)}
         >
           -
-        </CheckBoxOutlineBlankRoundedIcon>
+        </Button>
 
         <p>{item.amount}</p>
 
-        <CheckBoxOutlineBlankRoundedIcon
+        <Button
           size="small"
           disableElevation // Prevents any sort of drop shadow.
           variant="contained"
           onClick={() => addToCart(item)}
         >
           +
-        </CheckBoxOutlineBlankRoundedIcon>
+        </Button>
       </div>
     </div>
 

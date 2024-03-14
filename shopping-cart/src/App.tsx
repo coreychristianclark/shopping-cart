@@ -10,7 +10,6 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Badge from "@mui/material/Badge";
 // Styles
 import { Wrapper, StyledButton } from "./App.styles";
-// import { AddShoppingCartIcon } from "@mui//Icon";
 // Types
 export type CartItemType = {
   id: number;
@@ -35,8 +34,35 @@ const App = () => {
 
   const getTotalItems = (items: CartItemType[]) =>
     items.reduce((acc: number, item) => acc + item.amount, 0); // '0' is our starting value.
-  const handleAddToCart = (clickedItem: CartItemType) => null;
-  const handleRemoveFromCart = () => null;
+  const handleAddToCart = (clickedItem: CartItemType) => {
+    setCartItems((prev) => {
+      // 1. Is the item already added to the cart?
+      const isItemInCart = prev.find((item) => item.id === clickedItem.id);
+
+      if (isItemInCart) {
+        return prev.map((item) =>
+          item.id === clickedItem.id
+            ? { ...item, amount: item.amount + 1 }
+            : item
+        );
+      }
+      // First time the item is added:
+      return [...prev, { ...clickedItem, amount: 1 }];
+    });
+  };
+
+  const handleRemoveFromCart = (id: number) => {
+    setCartItems((prev) =>
+      prev.reduce((acc, item) => {
+        if (item.id === id) {
+          if (item.amount === 1) return acc;
+          return [...acc, { ...item, amount: item.amount - 1 }];
+        } else {
+          return [...acc, item];
+        }
+      }, [] as CartItemType[])
+    );
+  };
 
   if (isLoading) return <LinearProgress />;
   if (error) return <div>Something went wrong...</div>;
@@ -59,7 +85,7 @@ const App = () => {
       </StyledButton>
       <Grid container spacing={3}>
         {/* From Material UI */}
-        {data?.map((item) => (
+        {data?.map((item: CartItemType) => (
           <Grid item key={item.id} xs={12} sm={4}>
             {/* Adjusts the grid for different screen sizes */}
             <Item item={item} handleAddToCart={handleAddToCart} />
